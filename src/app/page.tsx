@@ -1,3 +1,4 @@
+import { TerminalSubmit } from '@/components/terminal-controls';
 import { DesktopObject } from '@/components/desktop-object';
 import { DesktopFolder } from '@/components/desktop-folder';
 import Link from 'next/link';
@@ -18,7 +19,7 @@ export default async function Home() {
     <div className="section-heading"><div><h2>Your workspaces</h2><p>Choose a space to get started.</p></div><span className="count-pill">{workspaces.length} total</span></div>
     <div className="workspace-grid">
       {workspaces.map(w=><Link className="workspace-card" href={`/w/${w.id}`} key={w.id}><DesktopFolder className="folder-large" id={w.id} name={w.name}/><div className="workspace-card-title">{w.name}<ArrowRight size={17}/></div><span className="muted">{w.role} · {w.projects} projects · {w.tasks} tasks</span></Link>)}
-      <form action={createWorkspace} className="workspace-card create-card"><div className="create-symbol"><Plus size={20}/></div><label htmlFor="workspace-name">Create a workspace</label><div className="inline-form"><input id="workspace-name" name="name" placeholder="Workspace name" required maxLength={100}/><button className="icon-button primary" aria-label="Create workspace"><DesktopObject kind="document"/><span className="desktop-caption">Create workspace</span></button></div></form>
+      <form action={createWorkspace} className="workspace-card create-card"><div className="create-symbol"><Plus size={20}/></div><label htmlFor="workspace-name">Create a workspace</label><div className="inline-form"><input id="workspace-name" name="name" placeholder="Workspace name" required maxLength={100}/><TerminalSubmit className="icon-button primary" aria-label="Create workspace"><DesktopObject kind="document"/><span className="desktop-caption">Create workspace</span></TerminalSubmit></div></form>
     </div>
     </section><section className="overview-tasks"><div className="section-heading top-gap"><div><h2>Assigned to you</h2><p>Keep the important things moving.</p></div></div>
     <div className="panel assigned-list">{assigned.length ? assigned.map(t=><Link key={t.id} href={`/w/${t.workspace_id}/p/${t.project_id}/t/${t.id}`} className="assigned-row"><span className="task-mark"><ListTodo size={17}/></span><span className="assigned-main"><strong>{t.title}</strong><small>{t.project_name}</small></span><span className={`priority ${t.priority}`}>{t.priority}</span><span className="status-tag">{t.status.replace('_',' ')}</span><ArrowRight size={16} className="row-arrow"/></Link>) : <div className="empty-state"><FolderKanban size={25}/><strong>All clear for now</strong><p>Tasks assigned to you will show up here.</p></div>}</div>

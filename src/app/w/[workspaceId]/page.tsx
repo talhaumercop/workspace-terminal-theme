@@ -1,3 +1,4 @@
+import { TerminalSubmit } from '@/components/terminal-controls';
 import { DesktopObject } from '@/components/desktop-object';
 import { DesktopFolder } from '@/components/desktop-folder';
 import Link from 'next/link';
@@ -14,7 +15,7 @@ export default async function WorkspacePage({params}:{params:Promise<{workspaceI
     <div className="stat-grid"><div className="stat-card"><FolderKanban/><div><strong>{projects.length}</strong><span>Projects</span></div></div><div className="stat-card"><Users/><div><strong>{members.length}</strong><span>Team members</span></div></div><div className="stat-card"><span className="stat-glyph">✓</span><div><strong>{projects.reduce((n,p)=>n+Number(p.done),0)}</strong><span>Completed tasks</span></div></div></div>
     <div className="section-heading top-gap"><div><h2>Projects</h2><p>Track progress across your team.</p></div><span className="count-pill">{projects.length} total</span></div>
     <div className="project-grid">{projects.map(p=><Link className="project-card" href={`/w/${workspaceId}/p/${p.id}`} key={p.id}><DesktopFolder className="folder-large" id={p.id} name={p.name}/><span className="project-card-heading"><strong>{p.name}</strong><ArrowRight size={16}/></span><p>{p.description || 'Your team project'}</p><div className="progress"><span style={{width:`${Number(p.tasks)?Number(p.done)/Number(p.tasks)*100:0}%`,background:p.color}}/></div><div className="project-meta"><span>{p.done}/{p.tasks} tasks done</span><span>{p.members} members</span></div></Link>)}
-    {role!=='viewer'&&<form action={createProject} className="project-card project-create"><span className="create-symbol"><Plus size={20}/></span><strong>New project</strong><p>Turn your next idea into a plan.</p><input type="hidden" name="workspaceId" value={workspaceId}/><input name="name" placeholder="Project name" maxLength={100} required/><button className="button primary"><DesktopObject kind="document"/><span className="desktop-caption">Create project</span></button></form>}</div>
+    {role!=='viewer'&&<form action={createProject} className="project-card project-create"><span className="create-symbol"><Plus size={20}/></span><strong>New project</strong><p>Turn your next idea into a plan.</p><input type="hidden" name="workspaceId" value={workspaceId}/><input name="name" placeholder="Project name" maxLength={100} required/><TerminalSubmit className="button primary"><DesktopObject kind="document"/><span className="desktop-caption">Create project</span></TerminalSubmit></form>}</div>
     {role==='viewer' && !projects.length && <div className="empty-state panel">No projects yet.</div>}
   </AppShell>;
 }
